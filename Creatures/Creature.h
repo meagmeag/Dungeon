@@ -35,8 +35,7 @@ public:
     void ClearInventory();
 
     // equip and unequip items
-    bool EquipWeapon(string itemName);
-    bool UnequipWeapon(string itemName);
+    bool EquipItem(string itemName);
 
 protected:
     string name;

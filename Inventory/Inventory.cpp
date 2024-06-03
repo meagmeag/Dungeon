@@ -210,42 +210,59 @@ bool Inventory::RemoveSlotOnly(InventorySlot *slot) {
 }
 
 /**
- * Find the slot of an item.
+ * Find the location of an item and its type.
  *
- * @param slot   a pointer to hold the slot of the item's inventory slot
- * @return a bool indicating if the item was found
+ * @param itemName   the name of the item to find
+ * @param slot       an inventory slot pointer to set as the location of the item
+ * @return the item type:
+ *         - for nonexistent item, w for weapon, c for consumable, b for backpack,
+ *         or 'i' for other item
  **/
-bool Inventory::FindItem(string itemName, InventorySlot* &slot) {
-    slot = nullptr;
+char Inventory::FindItem(string itemName, InventorySlot* &slot) {
     StandardizeName(itemName);
-    InventorySlot* walk = firstSlot;
+    slot = firstSlot;
 
-    while (walk) {
-        if (walk->name == itemName) {
-            slot = walk;
-            return true;
+    while (slot) {
+        if (slot->name == itemName) {
+            if (slot->thisWeapon) {
+                return 'w';
+            }
+            if (slot->thisConsumable) {
+                return 'c';
+            }
+            if (slot->thisBackpack) {
+                return 'b';
+            }
+            if (slot->thisItem) {
+                return 'i';
+            }
         }
-        walk = walk->nextSlot;
+        slot = slot->nextSlot;
     }
 
-    return false;
+    return '-';
 }
 
 /**
- *  Determine if an item is in the inventory.
+ * Check if item is in inventory or equipped.
  *
- * @param itemName  the item to find
- * @return a bool indicating if the item was found
+ * @param itemName   the name of the item to check for
+ * @return a bool indicating if the item is in inventory or equipped
  **/
-bool Inventory::FindItem(string itemName) {
+bool Inventory::HasItem(string itemName) {
     StandardizeName(itemName);
-    InventorySlot* walk = firstSlot;
 
-    while (walk) {
-        if (walk->name == itemName) {
+    // check if equipped
+    if (itemName == rightHandSlot->GetName() || itemName == leftHandSlot->GetName() || itemName == backpackSlot->GetName()) {
+        return true;
+    }
+
+    InventorySlot* slot = firstSlot;
+    while (slot) {
+        if (slot->name == itemName) {
             return true;
         }
-        walk = walk->nextSlot;
+        slot = slot->nextSlot;
     }
 
     return false;
@@ -277,19 +294,14 @@ void Inventory::ClearInventory() {
 /**
  * Equip a weapon.
  *
- * @param itemName       the name of the weapon
+ * @param slot           an inventory slot pointer holding the item's address
  * @param creatDmgBuff   the creature's dmgBuff
  * @return a bool indicating if the weapon was equipped
  * @post if successful, weapon is put into left hand slot or right hand slot (in that order)
+ *       and removed from regular inventory
  **/
-bool Inventory::EquipWeapon(string itemName, float& creatDmgBuff) {
-    StandardizeName(itemName);
-    InventorySlot* slot = nullptr;
-
-    if (!FindItem(itemName, slot)) { // item not in inventory
-        return false;
-    }
-    if(!slot->thisWeapon) { // make sure the item is actually a weapon
+bool Inventory::EquipWeapon(InventorySlot* &slot, float& creatDmgBuff) {
+    if (!slot) {
         return false;
     }
     if (leftHandSlot && rightHandSlot) { // hands full
@@ -346,6 +358,31 @@ bool Inventory::UnequipWeapon(string itemName, float &creatDmgBuff) {
 }
 
 /**
+ * Equip a backpack.
+ *
+ * @param slot           an inventory slot pointer holding the item's address
+ * @return a bool indicating if the backpack was equipped
+ * @post if successful, backpack is put into backpack slot and removed from regular inventory
+ */
+bool Inventory::EquipBackpack(InventorySlot* &slot) {
+    if (!slot) {
+        return false;
+    }
+    if (backpackSlot) { // already wearing backpack
+        return false;
+    }
+
+    backpackSlot = slot->thisBackpack;
+    extraSlots += slot->thisBackpack->GetInventorySlots();
+    UpdateInventorySlots();
+
+    // delete slot, but not backpack
+    RemoveSlotOnly(slot);
+
+    return true;
+}
+
+/**
  * Get the name of the item in the left hand slot.
  *
  * @return the name or an empty string if slot is empty
@@ -366,6 +403,14 @@ string Inventory::GetLeftHandSlotName() const {
 string Inventory::GetRightHandSlotName() const {
     if (rightHandSlot) {
         return rightHandSlot->GetName();
+    }
+
+    return "";
+}
+
+string Inventory::GetBackpackSlotName() const {
+    if (backpackSlot) {
+        return backpackSlot->GetName();
     }
 
     return "";

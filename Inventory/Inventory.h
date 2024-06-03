@@ -60,12 +60,13 @@ public:
     bool AddItem(Consumable item);
     bool RemoveItem(string itemName);
     void ClearInventory();
-    bool FindItem(string itemName, InventorySlot* &slot);
-    bool FindItem(string itemName);
+    char FindItem(string itemName, InventorySlot* &slot);
+    bool HasItem(string itemName);
 
     // equipping/unequipping items and using consumables
-    bool EquipWeapon(string itemName, float& creatDmgBuff);
+    bool EquipWeapon(InventorySlot* &slot, float& creatDmgBuff);
     bool UnequipWeapon(string itemName, float& creatDmgBuff);
+    bool EquipBackpack(InventorySlot* &slot);
     string GetRightHandSlotName() const;
     string GetLeftHandSlotName() const;
     string GetBackpackSlotName() const;
@@ -80,6 +81,7 @@ private:
     Weapon* rightHandSlot;
     Backpack* backpackSlot;
 
+    // private inventory management
 
     int baseSlots;
     int extraSlots;

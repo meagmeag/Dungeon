@@ -7,17 +7,10 @@
 using namespace std;
 
 int main() {
-    Creature goblin("goblin"); // test for first push!
+    Creature goblin("goblin");
     goblin.AddItem(Weapon());
-    goblin.AddItem(Weapon("stick"));
-    goblin.AddItem(Weapon("rock"));
-    goblin.AddItem(Weapon("melon"));
-    goblin.EquipWeapon("melon");
-    goblin.RemoveItem("stick");
-    goblin.AddItem(Weapon("sword", "sharp!", 10, 5.6));
-    goblin.EquipWeapon("sword");
-    goblin.UnequipWeapon("melon");
-    goblin.RemoveItem("melon");
-    cout << goblin.HasItem("melon");
-    //cout << goblin;
+    goblin.EquipItem("pretty weak weapon");
+    goblin.AddItem(Backpack());
+    goblin.EquipItem("unnamed backpack");
+    cout << goblin;
 }

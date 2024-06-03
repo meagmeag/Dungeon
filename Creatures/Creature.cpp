@@ -101,38 +101,41 @@ bool Creature::HasItem(string itemName) {
     if (inventory.GetRightHandSlotName() == itemName) {
         return true;
     }
-/*    if (inventory.GetBackpackSlotName() == itemName) {
+    if (inventory.GetBackpackSlotName() == itemName) {
         return true;
-    } */
+    }
 
     // if not in equipped slots, check inventory
-    return inventory.FindItem(itemName);
+    return inventory.HasItem(itemName);
 }
 
-/**
- * Equip weapon.
- *
- * @param itemName  the name of the item
- * @return a bool indicating if item was equipped
- * @post buffedDmg and totalDmg
- **/
-bool Creature::EquipWeapon(string itemName) {
-    bool result = inventory.EquipWeapon(itemName, dmgBuff);
-    UpdateTotalDamage();
-    return result;
+bool Creature::EquipItem(string itemName) {
+    InventorySlot* slot = nullptr;
+    char itemType;
+
+    itemType = inventory.FindItem(itemName, slot);
+    if (itemType == 'w') {
+        bool result = inventory.EquipWeapon(slot, dmgBuff);
+        UpdateTotalDamage();
+        return result;
+    }
+    if (itemType == 'b') {
+        return inventory.EquipBackpack(slot);
+    }
+
+    return false; // consumable or other non-equippable item
 }
 
-/**
- * Unequip weapon.
- *
- * @param itemName  the name of the item
- * @return a bool indicating if item was unequipped
- **/
+/*
 bool Creature::UnequipWeapon(string itemName) {
     bool result = inventory.UnequipWeapon(itemName, dmgBuff);
     UpdateTotalDamage();
     return result;
 }
+
+bool Creature::EquipBackpack(string itemName) {
+    return inventory.EquipBackpack(itemName);
+}*/
 
 /**
  * Remove all items from creature's inventory.
