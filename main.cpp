@@ -11,6 +11,10 @@ int main() {
     goblin.AddItem(Weapon());
     goblin.EquipItem("pretty weak weapon");
     goblin.AddItem(Backpack());
+    goblin.AddItem(Item());
     goblin.EquipItem("unnamed backpack");
+    goblin.EquipItem("useless item");
+    goblin.UnequipItem("pretty weak weapon");
+    goblin.UnequipItem("unnamed backpack");
     cout << goblin;
 }

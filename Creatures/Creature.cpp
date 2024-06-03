@@ -109,6 +109,14 @@ bool Creature::HasItem(string itemName) {
     return inventory.HasItem(itemName);
 }
 
+/**
+ * Equip an item in the inventory.
+ *
+ * @param itemName    the name of the item
+ * @return a bool indicatinf if the item was equipped
+ * @post if item's respective slot is available, item is moved from inventory
+ *       to slot
+ **/
 bool Creature::EquipItem(string itemName) {
     InventorySlot* slot = nullptr;
     char itemType;
@@ -126,16 +134,17 @@ bool Creature::EquipItem(string itemName) {
     return false; // consumable or other non-equippable item
 }
 
-/*
-bool Creature::UnequipWeapon(string itemName) {
-    bool result = inventory.UnequipWeapon(itemName, dmgBuff);
-    UpdateTotalDamage();
-    return result;
-}
+bool Creature::UnequipItem(string itemName) {
+    if (inventory.UnequipWeapon(itemName, dmgBuff)) { // try to unequip item as a weapon first
+        UpdateTotalDamage();
+        return true;
+    }
+    if (inventory.UnequipBackpack(itemName)) { // then try as backpack
+        return true;
+    }
 
-bool Creature::EquipBackpack(string itemName) {
-    return inventory.EquipBackpack(itemName);
-}*/
+    return false;
+}
 
 /**
  * Remove all items from creature's inventory.

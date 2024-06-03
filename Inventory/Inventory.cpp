@@ -143,6 +143,65 @@ bool Inventory::AddItem(Consumable item) {
 }
 
 /**
+ * Add an item that already exists. (Use for moving item from equipped slot back to inventory.)
+ *
+ * @param item    the address of the item to add
+ * @return a bool indicating if item was added to inventory successfully
+ */
+bool Inventory::AddItem(Backpack* item) {
+    if (numItems == totalSlots) { // no available slots
+        return false;
+    }
+
+    // else, slots available
+    InventorySlot* slot = new InventorySlot;
+    if (!slot) {
+        return false; // no space allocated
+    }
+    slot->thisBackpack = item;
+    slot->name = item->GetName();
+
+    if (!firstSlot) {
+        firstSlot = slot;
+        lastSlot = slot;
+    }
+    else {
+        lastSlot->nextSlot = slot;
+        slot->prevSlot = lastSlot;
+        lastSlot = slot;
+    }
+
+    numItems++;
+    return true;
+}
+bool Inventory::AddItem(Weapon* item) {
+    if (numItems == totalSlots) { // no available slots
+        return false;
+    }
+
+    // else, slots available
+    InventorySlot* slot = new InventorySlot;
+    if (!slot) {
+        return false; // no space allocated
+    }
+    slot->thisWeapon = item;
+    slot->name = item->GetName();
+
+    if (!firstSlot) {
+        firstSlot = slot;
+        lastSlot = slot;
+    }
+    else {
+        lastSlot->nextSlot = slot;
+        slot->prevSlot = lastSlot;
+        lastSlot = slot;
+    }
+
+    numItems++;
+    return true;
+}
+
+/**
  * Remove an item whose existence/slot is unknown from the inventory.
  *
  * @param itemName   the name of the item to remove
@@ -332,24 +391,21 @@ bool Inventory::EquipWeapon(InventorySlot* &slot, float& creatDmgBuff) {
  * @post if successful, weapon is put back into inventory
  **/
 bool Inventory::UnequipWeapon(string itemName, float &creatDmgBuff) {
-    if (numItems == totalSlots) { // cannot unequip bc no room in inventory
+    if (numItems + 1 > totalSlots) { // cannot unequip bc no room in inventory
         return false;
     }
 
     StandardizeName(itemName);
-
     // find which hand it is in, remove buff from creature, and add item back to inventory, removing from hand
     if (leftHandSlot && leftHandSlot->GetName() == itemName) {
         creatDmgBuff /= leftHandSlot->GetDamageBuff();
-        AddItem(*leftHandSlot);
-        delete leftHandSlot;
+        AddItem(leftHandSlot);
         leftHandSlot = nullptr;
         return true;
     }
     else if (rightHandSlot && rightHandSlot->GetName() == itemName) {
         creatDmgBuff /= rightHandSlot->GetDamageBuff();
-        AddItem(*rightHandSlot);
-        delete rightHandSlot;
+        AddItem(rightHandSlot);
         rightHandSlot = nullptr;
         return true;
     }
@@ -380,6 +436,22 @@ bool Inventory::EquipBackpack(InventorySlot* &slot) {
     RemoveSlotOnly(slot);
 
     return true;
+}
+
+bool Inventory::UnequipBackpack(string itemName) {
+    if (numItems + 1 > baseSlots) { // must have room for backpack once removed
+        return false;
+    }
+
+    StandardizeName(itemName);
+    if (backpackSlot->GetName() == itemName) {
+        extraSlots -= backpackSlot->GetInventorySlots();
+        AddItem(backpackSlot);
+        UpdateInventorySlots();
+        backpackSlot = nullptr;
+    }
+
+    return false;
 }
 
 /**

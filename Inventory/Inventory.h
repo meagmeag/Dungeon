@@ -56,7 +56,9 @@ public:
     // managing inventory
     bool AddItem(Item item);
     bool AddItem(Backpack item);
+    bool AddItem(Backpack* item);
     bool AddItem(Weapon item);
+    bool AddItem(Weapon* item);
     bool AddItem(Consumable item);
     bool RemoveItem(string itemName);
     void ClearInventory();
@@ -67,6 +69,7 @@ public:
     bool EquipWeapon(InventorySlot* &slot, float& creatDmgBuff);
     bool UnequipWeapon(string itemName, float& creatDmgBuff);
     bool EquipBackpack(InventorySlot* &slot);
+    bool UnequipBackpack(string itemName);
     string GetRightHandSlotName() const;
     string GetLeftHandSlotName() const;
     string GetBackpackSlotName() const;

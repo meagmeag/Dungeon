@@ -12,7 +12,7 @@ Weapon::Weapon() {
     name = "PRETTY WEAK WEAPON";
     description = "I guess it works in a pinch.";
     goldWorth = 0;
-    dmgBuff = 1.1;
+    dmgBuff = 1.5;
 }
 
 /**
@@ -25,7 +25,7 @@ Weapon::Weapon(string name) {
     StandardizeName(this->name);
     description = "I guess it works in a pinch.";
     goldWorth = 0;
-    dmgBuff = 1.1;
+    dmgBuff = 1.5;
 }
 
 
@@ -41,7 +41,7 @@ Weapon::Weapon(string name, string description) {
     this->description = description;
     StandardizeDescription(this->description);
     goldWorth = 0;
-    dmgBuff = 1.1;
+    dmgBuff = 1.5;
 }
 
 /**

@@ -36,6 +36,7 @@ public:
 
     // equip and unequip items
     bool EquipItem(string itemName);
+    bool UnequipItem(string itemName);
 
 protected:
     string name;
