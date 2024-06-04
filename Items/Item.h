@@ -18,6 +18,7 @@ public:
     friend ostream& operator<<(ostream& out, const Item& item);
 
     string GetName() const { return name; }
+    char GetType() const { return 'i'; }
     void SetName(string name);
     string GetDescription() { return description; }
     void SetDescription(string description);

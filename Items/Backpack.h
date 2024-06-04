@@ -16,6 +16,7 @@ public:
     Backpack(string name, string description, int goldWorth, int inventorySlots);
     friend ostream& operator<<(ostream& out, const Backpack& item);
 
+    char GetType() const {return 'b'; }
     int GetInventorySlots() const { return inventorySlots; }
 
 private:

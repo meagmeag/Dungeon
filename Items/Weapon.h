@@ -16,6 +16,7 @@ public:
     Weapon(string name, string description, int goldWorth, float dmgBuff);
     friend ostream& operator<<(ostream& out, const Weapon& item);
 
+    char GetType() const { return 'w'; }
     float GetDamageBuff()  const { return dmgBuff; }
 
 private:

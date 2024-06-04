@@ -14,6 +14,7 @@ public:
     Consumable(string name, string description, int goldWorth, string useDescription, int hpRestore);
     friend ostream& operator<<(ostream& out, const Consumable& item);
 
+    char GetType() const { return 'c'; }
     float GetDamageBuff() const { return dmgBuff; }
     int GetNumEffectRounds() const { return numRounds; }
     int GetHPRestored() const { return hpRestore; }

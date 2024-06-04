@@ -134,16 +134,19 @@ bool Creature::EquipItem(string itemName) {
     return false; // consumable or other non-equippable item
 }
 
+/**
+ * Unequip an item and return it to inventory.
+ *
+ * @param itemName   the name of the item to equip
+ * @return a bool indicating if unequip was successful
+ **/
 bool Creature::UnequipItem(string itemName) {
     if (inventory.UnequipWeapon(itemName, dmgBuff)) { // try to unequip item as a weapon first
         UpdateTotalDamage();
         return true;
     }
-    if (inventory.UnequipBackpack(itemName)) { // then try as backpack
-        return true;
-    }
 
-    return false;
+    return inventory.UnequipBackpack(); // then try as backpack
 }
 
 /**
