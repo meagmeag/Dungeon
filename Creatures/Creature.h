@@ -34,9 +34,13 @@ public:
     bool HasItem(string itemName);
     void ClearInventory();
 
-    // equip and unequip items
+    // use, equip, and unequip items
+    void UseConsumable(string itemName);
     bool EquipItem(string itemName);
     bool UnequipItem(string itemName);
+
+    // combat
+    void TakeDamage(int damage);
 
 protected:
     string name;

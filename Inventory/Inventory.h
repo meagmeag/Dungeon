@@ -6,7 +6,6 @@
 #define DUNGEON_CRAWLER_INVENTORY_H
 
 #include "BasicFunctions.h"
-#include <cassert>
 #include "Backpack.h"
 #include "Weapon.h"
 #include "Consumable.h"
@@ -22,26 +21,6 @@ struct InventorySlot {
     Backpack* thisBackpack = nullptr;
     Weapon* thisWeapon = nullptr;
     Consumable* thisConsumable = nullptr;
-
-    // inventory slots must point to only ONE item
-    void CheckGoodSlot() {
-        int numItems = 0;
-
-        if (thisItem) {
-            numItems++;
-        }
-        if (thisBackpack) {
-            numItems++;
-        }
-        if (thisWeapon) {
-            numItems++;
-        }
-        if (thisConsumable) {
-            numItems++;
-        }
-
-        assert(numItems <= 1);
-    }
 };
 
 class Inventory : protected  BasicFunctions {
@@ -58,9 +37,14 @@ public:
     bool AddItem(Backpack item);
     bool AddItem(Weapon item);
     bool AddItem(Consumable item);
+    bool AddItem(Weapon* item);
+    bool AddItem(Backpack* item);
     bool RemoveItem(string itemName);
+    bool RemoveItem(InventorySlot* &slot);
     void ClearInventory();
-    char FindItem(string itemName, InventorySlot* &slot);
+    char FindItem(string itemName, InventorySlot* &slot); // find slot and return item type
+
+    // checking inventory
     bool HasItem(string itemName);
     string GetRightHandSlotName() const;
     string GetLeftHandSlotName() const;
@@ -71,8 +55,6 @@ public:
     bool UnequipWeapon(string itemName, float& creatDmgBuff);
     bool EquipBackpack(InventorySlot* &slot);
     bool UnequipBackpack();
-    bool AddItem(Weapon* item);
-    bool AddItem(Backpack* item);
 
 private:
     // unequipped inventory
@@ -85,15 +67,15 @@ private:
     Backpack* backpackSlot;
 
     // private inventory management
-    bool SimpleEquipBackpack(InventorySlot* &slot);
+    void UpdateInventorySlots() { totalSlots = baseSlots + extraSlots; }  // use after equipping or unequipping backpack
+    bool RemoveSlotOnly(InventorySlot* slot); // use after equipping any item
+    bool SimpleEquipBackpack(InventorySlot* &slot); // equip backpack without swapping
 
+    // inventory slot numbers
     int baseSlots;
     int extraSlots;
     int totalSlots;
     int numItems;
-
-    void UpdateInventorySlots() { totalSlots = baseSlots + extraSlots; }
-    bool RemoveSlotOnly(InventorySlot* slot);
 };
 
 

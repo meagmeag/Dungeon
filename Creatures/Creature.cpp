@@ -75,13 +75,21 @@ bool Creature::AddItem(Consumable item) {
 }
 
 /**
- * Remove an item from creature's inventory.
+ * Remove an item from creature's inventory or equipped items (in that order).
  *
  * @param itemName   the name of the item to remove
  * @return a bool indicating if the removal was successful
  **/
 bool Creature::RemoveItem(string itemName) {
-    return inventory.RemoveItem(itemName);
+    if (inventory.RemoveItem(itemName)) {
+        return true;
+    }
+
+    // not in main inventory, could be in equipped slots
+    if (inventory.UnequipWeapon(itemName, dmgBuff)) { // check if in weapon slots
+        return true;
+    }
+    return inventory.UnequipBackpack(); // check if in backpack slot
 }
 
 
@@ -110,10 +118,32 @@ bool Creature::HasItem(string itemName) {
 }
 
 /**
+ * Use consumable.
+ *
+ * @param itemName   the name of consumable
+ * @post health is added to creature
+ **/
+void Creature::UseConsumable(string itemName) {
+    InventorySlot* slot = nullptr;
+    char itemType;
+
+    itemType = inventory.FindItem(itemName, slot);
+    if (itemType != 'c') { // item exists but is not a consumable
+        return;
+    }
+
+    currHealth += slot->thisConsumable->GetHPRestored();
+    if (currHealth > maxHealth) {
+        currHealth = maxHealth;
+    }
+    inventory.RemoveItem(slot);
+}
+
+/**
  * Equip an item in the inventory.
  *
  * @param itemName    the name of the item
- * @return a bool indicatinf if the item was equipped
+ * @return a bool indicating if the item was equipped
  * @post if item's respective slot is available, item is moved from inventory
  *       to slot
  **/
@@ -154,6 +184,15 @@ bool Creature::UnequipItem(string itemName) {
  **/
 void Creature::ClearInventory() {
     inventory.ClearInventory();
+}
+
+/**
+ * Apply damage to creature's health.
+ *
+ * @param damage   the damage dealt to creature
+ **/
+void Creature::TakeDamage(int damage) {
+    currHealth -= damage;
 }
 
 /**

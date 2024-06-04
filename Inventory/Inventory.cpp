@@ -203,8 +203,7 @@ bool Inventory::AddItem(Weapon* item) {
 }
 
 /**
- * Remove an item whose existence/slot is unknown from the inventory
- * or equipped items (in that order).
+ * Remove an item whose existence/slot is unknown from the inventory.
  *
  * @param itemName   the name of the item to remove
  * @return a bool indicating if the removal was successful
@@ -239,7 +238,46 @@ bool Inventory::RemoveItem(string itemName) {
         return true;
     }
 
-    // not in regular inventory, check equipped slots
+    return false; // nowhere in inventory
+}
+
+/**
+ * Remove an item whose location is known.
+ *
+ * @param slot   the inventory slot the item is located in
+ * @return a bool indicating if removal was successful
+ **/
+bool Inventory::RemoveItem(InventorySlot *&slot) {
+    if (!slot) {
+        return false;
+    }
+
+    if (slot) { // in regular inventory
+        if (slot == firstSlot) {
+            firstSlot = slot->nextSlot;
+        }
+        if (slot == lastSlot) {
+            lastSlot = slot->prevSlot;
+        }
+        if (slot->prevSlot) {
+            slot->prevSlot->nextSlot = slot->nextSlot;
+        }
+        if (slot->nextSlot) {
+            slot->nextSlot->prevSlot = slot->prevSlot;
+        }
+
+        numItems--;
+
+        // delete slot's content then slot itself
+        delete slot->thisItem;
+        delete slot->thisConsumable;
+        delete slot->thisWeapon;
+        delete slot->thisBackpack;
+        delete slot;
+        return true;
+    }
+
+    return false;
 }
 
 /**
