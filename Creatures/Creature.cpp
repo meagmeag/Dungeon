@@ -121,7 +121,7 @@ bool Creature::HasItem(string itemName) {
  * Use consumable.
  *
  * @param itemName   the name of consumable
- * @post health is added to creature
+ * @post consumable's health restore is added to creature
  **/
 void Creature::UseConsumable(string itemName) {
     InventorySlot* slot = nullptr;
