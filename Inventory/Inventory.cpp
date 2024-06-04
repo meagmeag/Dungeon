@@ -417,13 +417,13 @@ bool Inventory::UnequipWeapon(string itemName, float &creatDmgBuff) {
 }
 
 /**
- * Equip a backpack.
+ * Equip a backpack (does not swap).
  *
  * @param slot           an inventory slot pointer holding the item's address
  * @return a bool indicating if the backpack was equipped
  * @post if successful, backpack is put into backpack slot and removed from regular inventory
  */
-bool Inventory::EquipBackpack(InventorySlot* &slot) {
+bool Inventory::SimpleEquipBackpack(InventorySlot* &slot) {
     if (backpackSlot) { // already wearing backpack
         return false;
     }
@@ -439,6 +439,31 @@ bool Inventory::EquipBackpack(InventorySlot* &slot) {
     RemoveSlotOnly(slot);
 
     return true;
+}
+
+/**
+ * Equip a backpack (swaps current backpack if necessary).
+ *
+ * @param slot
+ * @return
+ **/
+bool Inventory::EquipBackpack(InventorySlot *&slot) {
+    if (!slot || !slot->thisBackpack || numItems > baseSlots + slot->thisBackpack->GetInventorySlots()) {
+        return false;
+    }
+
+    if (backpackSlot) {
+        AddItem(backpackSlot);
+        backpackSlot = slot->thisBackpack;
+        extraSlots = backpackSlot->GetInventorySlots();
+        UpdateInventorySlots();
+        RemoveSlotOnly(slot);
+        return true;
+    }
+    else {
+        SimpleEquipBackpack(slot);
+        return true;
+    }
 }
 
 /**

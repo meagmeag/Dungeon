@@ -85,6 +85,7 @@ private:
     Backpack* backpackSlot;
 
     // private inventory management
+    bool SimpleEquipBackpack(InventorySlot* &slot);
 
     int baseSlots;
     int extraSlots;
