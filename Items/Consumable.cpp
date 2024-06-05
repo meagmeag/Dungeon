@@ -35,6 +35,7 @@ Consumable::Consumable(string name, string description, int goldWorth, string us
     StandardizeDescription(this->description);
     this->useDescription = useDescription;
     StandardizeDescription(this->useDescription);
+    this->goldWorth = goldWorth;
     this->dmgBuff = dmgBuff;
     this->numRounds = numRounds;
     hpRestore = 0;
@@ -56,6 +57,7 @@ Consumable::Consumable(string name, string description, int goldWorth, string us
     StandardizeDescription(this->description);
     this->useDescription = useDescription;
     StandardizeDescription(this->useDescription);
+    this->goldWorth = goldWorth;
     this->hpRestore = hpRestore;
     dmgBuff = 1;
     numRounds = 0;
@@ -72,10 +74,13 @@ ostream& operator<<(ostream& out, const Consumable& item) {
     out << static_cast<Item> (item);
 
     if (item.dmgBuff > 1) {
-        out << "\tMultiplies attack damage by " << item.dmgBuff << " for " << item.numRounds <<  " rounds when consumed." << endl;
+        out << "    Multiplies attack damage by " << item.dmgBuff << " for " << item.numRounds <<  " rounds when consumed." << endl;
     }
-    else if (item.hpRestore > 0) {
-        out << "\tRestores " << item.hpRestore << " HP when consumed." << endl;
+    if (item.hpRestore > 0) {
+        out << "    Restores " << item.hpRestore << " HP when consumed." << endl;
+    }
+    else if (item.hpRestore < 0) {
+        out << "    Damages you by " << item.hpRestore << " HP when consumed." << endl;
     }
 
     return out;

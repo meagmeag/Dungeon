@@ -1,1 +1,9 @@
 show ___: show the stats of ___
+    - show me: show player's stats
+    - show my health: show player's health
+
+take ___: put ___ in inventory
+
+attack ___: do a basic attack on an enemy
+
+use ___: use consumable

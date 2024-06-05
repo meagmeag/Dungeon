@@ -221,6 +221,9 @@ void Creature::ClearInventory() {
  **/
 void Creature::TakeDamage(int damage) {
     currHealth -= damage;
+    if (currHealth < 0) {
+        currHealth = 0;
+    }
 }
 
 /**
@@ -234,7 +237,7 @@ ostream& operator<<(ostream &out, const Creature& creature) {
     out << setw(100) << setfill('-') << left << creature.name + " - " + creature.PrintLevel() + " " << endl
         << creature.PrintHealth() << endl
         << creature.PrintBaseDamage() << endl
-        << creature.PrintBuffedDamage() << endl << endl
+        << creature.PrintTotalDamage() << endl << endl
         << creature.inventory
         << setw(100) << setfill('_') << "" << endl << endl;
 
@@ -250,13 +253,13 @@ ostream& operator<<(ostream &out, const Creature& creature) {
     return "Level " + to_string(level);
  }
 string Creature::PrintHealth() const {
-    return "Health: " + to_string(currHealth) + "/" + to_string(currHealth) + " HP";
+    return "Health: " + to_string(currHealth) + "/" + to_string(maxHealth) + " HP";
 }
 string Creature::PrintBaseDamage() const {
     return "Base Damage: " + to_string(baseDmg);
 }
-string Creature::PrintBuffedDamage() const {
-    return "Buffed Damage: " + to_string(totalDmg);
+string Creature::PrintTotalDamage() const {
+    return "Total Damage: " + to_string(totalDmg);
 }
 string Creature::PrintInventory() const {
      stringstream ss;

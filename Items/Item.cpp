@@ -90,8 +90,8 @@ void Item::SetDescription(string description)
  **/
 ostream& operator<<(ostream& out, const Item& item) {
     out << item.name << endl
-        << "\t" << item.description << endl
-        << "\tWorth " << item.goldWorth << " gold." << endl;
+        << "    " << item.description << endl
+        << "    Worth " << item.goldWorth << " gold." << endl;
 
     return out;
 }

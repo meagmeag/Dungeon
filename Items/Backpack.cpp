@@ -69,7 +69,7 @@ Backpack::Backpack(string name, string description, int goldWorth, int inventory
  **/
 ostream& operator<<(ostream& out, const Backpack& item) {
     out << static_cast<Item> (item)
-        << "\tAdds " << item.inventorySlots << " inventory slot";
+        << "    Adds " << item.inventorySlots << " inventory slot";
     if (item.inventorySlots > 1) { // add s if 2+ slots
         cout << "s";
     }

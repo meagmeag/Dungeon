@@ -21,7 +21,7 @@ public:
     string PrintLevel() const;
     string PrintHealth() const;
     string PrintBaseDamage() const;
-    string PrintBuffedDamage() const;
+    string PrintTotalDamage() const;
     string PrintInventory() const;
 
     // get info

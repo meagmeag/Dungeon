@@ -70,7 +70,7 @@ Weapon::Weapon(string name, string description, int goldWorth, float dmgBuff) {
  **/
 ostream& operator<<(ostream& out, const Weapon& item) {
     out << static_cast<Item> (item)
-        << "\tMultiplies attack damage by " << item.dmgBuff << " when equipped." << endl;
+        << "    Multiplies attack damage by " << item.dmgBuff << " when equipped." << endl;
 
     return out;
 }

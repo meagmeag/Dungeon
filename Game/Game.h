@@ -16,10 +16,11 @@ public:
     void Run();
 
 private:
-    void NextDialogue();
+    void GetCorrectInput(string correctInput, string errorMessage);
+    void NextDialogue(string action);
     void GetPlayerName();
     void Intro();
-    void Combat();
+    void Combat(Creature monster);
 
     Creature player;
     Creature goblin; // temporary
