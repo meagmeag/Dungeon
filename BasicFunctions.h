@@ -18,6 +18,7 @@ public:
     void StandardizeDescription(string& description);
     bool EndOfSentence(string word);
     void StandardizeGold(int& gold);
+    string Quote(string words);
 };
 
 

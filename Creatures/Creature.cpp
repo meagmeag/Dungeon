@@ -9,6 +9,7 @@
  **/
 Creature::Creature() {
     name = "NAMELESS CREATURE";
+    level = 1;
 
     maxHealth = 10;
     currHealth = maxHealth;
@@ -27,6 +28,7 @@ Creature::Creature() {
 Creature::Creature(std::string name) {
     this->name = name;
     StandardizeName(this->name);
+    level = 1;
 
     maxHealth = 10;
     currHealth = maxHealth;
@@ -47,6 +49,22 @@ Creature::Creature(std::string name) {
 Creature::Creature(string name, int maxHealth, int baseDmg) {
     this->name = name;
     StandardizeName(this->name);
+    level = 1;
+
+    this->maxHealth = maxHealth;
+    currHealth = maxHealth;
+
+    this->baseDmg = baseDmg;
+    dmgBuff = baseDmg;
+}
+
+/**
+ *
+ */
+Creature::Creature(string name, int health, int baseDmg, int level) {
+    this->name = name;
+    StandardizeName(this->name);
+    this->level = level;
 
     this->maxHealth = maxHealth;
     currHealth = maxHealth;
@@ -213,12 +231,37 @@ void Creature::TakeDamage(int damage) {
  * @return the stream written to
  **/
 ostream& operator<<(ostream &out, const Creature& creature) {
-    out << setw(100) << setfill('-') << left << creature.name << endl
-        << "Health: " << creature.currHealth << "/" << creature.maxHealth << " HP" << endl
-        << "Base Damage: " << creature.baseDmg << endl
-        << "Buffed Damage: " << creature.totalDmg << endl << endl
+    out << setw(100) << setfill('-') << left << creature.name + " - " + creature.PrintLevel() + " " << endl
+        << creature.PrintHealth() << endl
+        << creature.PrintBaseDamage() << endl
+        << creature.PrintBuffedDamage() << endl << endl
         << creature.inventory
         << setw(100) << setfill('_') << "" << endl << endl;
 
     return out;
 }
+
+/**
+ * Functions to print various stats.
+ *
+ * @return a line of this format: "STAT_NAME: stat_info"
+ **/
+ string Creature::PrintLevel() const {
+    return "Level " + to_string(level);
+ }
+string Creature::PrintHealth() const {
+    return "Health: " + to_string(currHealth) + "/" + to_string(currHealth) + " HP";
+}
+string Creature::PrintBaseDamage() const {
+    return "Base Damage: " + to_string(baseDmg);
+}
+string Creature::PrintBuffedDamage() const {
+    return "Buffed Damage: " + to_string(totalDmg);
+}
+string Creature::PrintInventory() const {
+     stringstream ss;
+     ss << inventory;
+     string inventoryPrint = ss.str();
+     inventoryPrint.pop_back(); // remove last endline
+    return inventoryPrint;
+ }

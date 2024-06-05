@@ -76,3 +76,12 @@ void BasicFunctions::StandardizeGold(int& gold) {
         gold = 0;
     }
 }
+
+/**
+ * Put a string in quotes.
+ *
+ * @param words  the string to quote
+ */
+string BasicFunctions::Quote(std::string words) {
+    return "\"" + words + "\"";
+}

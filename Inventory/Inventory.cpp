@@ -603,7 +603,7 @@ ostream& operator<<(ostream& out, const Inventory& inventory) {
 
     // print equipped item
     if (inventory.leftHandSlot) {
-        out << "Left hand holding: " << endl
+        out << "Left hand holding:" << endl
             << *inventory.leftHandSlot << endl;
     }
     else {
@@ -611,7 +611,7 @@ ostream& operator<<(ostream& out, const Inventory& inventory) {
     }
 
     if (inventory.rightHandSlot) {
-        out << "Right hand holding: " << endl
+        out << "Right hand holding:" << endl
             << *inventory.rightHandSlot << endl;
     }
     else {

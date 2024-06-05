@@ -14,8 +14,15 @@ public:
     Creature();
     Creature(string name);
     Creature(string name, int health, int baseDmg);
+    Creature(string name, int health, int baseDmg, int level);
 
+    // printing
     friend ostream& operator<<(ostream &out, const Creature& creature);
+    string PrintLevel() const;
+    string PrintHealth() const;
+    string PrintBaseDamage() const;
+    string PrintBuffedDamage() const;
+    string PrintInventory() const;
 
     // get info
     string GetName() const { return name; }
@@ -45,6 +52,7 @@ public:
 
 protected:
     string name;
+    int level;
 
     int maxHealth;
     int currHealth;
