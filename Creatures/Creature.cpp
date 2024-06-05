@@ -56,6 +56,16 @@ Creature::Creature(string name, int maxHealth, int baseDmg) {
 }
 
 /**
+ * Set a creature's name.
+ *
+ * @param name the name of the creature
+ **/
+void Creature::SetName(std::string name) {
+    this->name = name;
+    StandardizeName(this->name);
+}
+
+/**
  * Add an item to creature's inventory.
  *
  * @param item    the item to add

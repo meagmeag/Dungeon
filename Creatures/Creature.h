@@ -19,6 +19,7 @@ public:
 
     // get info
     string GetName() const { return name; }
+    void SetName(string name);
     int GetMaxHealth() const { return maxHealth; }
     int GetCurrentHealth() const {return currHealth; }
     int GetBaseDamage() const { return baseDmg; }
