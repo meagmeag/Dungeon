@@ -9,11 +9,13 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <cmath>
 
 using namespace std;
 
 class BasicFunctions {
 public:
+    string StandardizeStat(int stat) const;
     void StandardizeName(string& name);
     void StandardizeDescription(string& description);
     bool EndOfSentence(string word);

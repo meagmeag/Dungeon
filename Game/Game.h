@@ -6,7 +6,7 @@
 #define DUNGEON_GAME_H
 
 #include "BasicFunctions.h"
-#include "Creature.h"
+#include "Player.h"
 using namespace std;
 
 

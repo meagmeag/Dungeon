@@ -21,6 +21,7 @@ public:
 
 private:
     float dmgBuff;
+    void StandardizeDamageBuff();
 };
 
 

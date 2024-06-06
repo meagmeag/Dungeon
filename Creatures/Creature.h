@@ -9,12 +9,20 @@
 #include "Inventory.h"
 using namespace std;
 
+/**
+ * CREATURE RULES:
+ *
+ * "Resources" are 15 X level X 1.1^level.
+ * Health cannot be more than 90% of resources or less than 75%.
+ * Health + Base Damage must equal resources
+ **/
+
 class Creature : protected BasicFunctions {
 public:
     Creature();
     Creature(string name);
-    Creature(string name, int health, int baseDmg);
-    Creature(string name, int health, int baseDmg, int level);
+    Creature(string name, float healthPercent);
+    Creature(string name, float healthPercent, int level);
 
     // printing
     friend ostream& operator<<(ostream &out, const Creature& creature);
@@ -23,6 +31,7 @@ public:
     string PrintBaseDamage() const;
     string PrintTotalDamage() const;
     string PrintInventory() const;
+    string PrintXPWorth() const;
 
     // get info
     string GetName() const { return name; }
@@ -32,6 +41,7 @@ public:
     int GetBaseDamage() const { return baseDmg; }
     int GetBuffedDamage() const { return dmgBuff; }
     int GetTotalDamage() const { return totalDmg; }
+    int GetXPWorth() const { return pow(level, 2) +  pow(dmgBuff, 3); }
 
     // manage inventory
     bool AddItem(Item item);
@@ -53,6 +63,7 @@ public:
 protected:
     string name;
     int level;
+    void SetHealthAndDamage(float healthPercent);
 
     int maxHealth;
     int currHealth;

@@ -26,6 +26,7 @@ Weapon::Weapon(string name) {
     description = "I guess it works in a pinch.";
     goldWorth = 0;
     dmgBuff = 1.5;
+    StandardizeDamageBuff();
 }
 
 
@@ -42,6 +43,7 @@ Weapon::Weapon(string name, string description) {
     StandardizeDescription(this->description);
     goldWorth = 0;
     dmgBuff = 1.5;
+    StandardizeDamageBuff();
 }
 
 /**
@@ -59,6 +61,7 @@ Weapon::Weapon(string name, string description, int goldWorth, float dmgBuff) {
     StandardizeDescription(this->description);
     this->goldWorth = goldWorth;
     this->dmgBuff = dmgBuff;
+    StandardizeDamageBuff();
 }
 
 /**
@@ -73,4 +76,16 @@ ostream& operator<<(ostream& out, const Weapon& item) {
         << "    Multiplies attack damage by " << item.dmgBuff << " when equipped." << endl;
 
     return out;
+}
+
+/**
+ * Make sure damage buff is within range (1 - 10)
+ **/
+void Weapon::StandardizeDamageBuff() {
+    if (dmgBuff > 10) {
+        dmgBuff = 10;
+    }
+    else if (dmgBuff < 1) {
+        dmgBuff = 1;
+    }
 }

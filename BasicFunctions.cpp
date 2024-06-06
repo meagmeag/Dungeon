@@ -17,6 +17,20 @@ void BasicFunctions::StandardizeName(string& name) {
 }
 
 /**
+ * Add commas to a stat.
+ *
+ * @param stat   the stat to standardize
+ * @return the stat as a string with commas
+ **/
+string BasicFunctions::StandardizeStat(int stat) const {
+    string statString = to_string(stat);
+    for (int i = statString.length() - 3; i > 0; i -= 3) {
+        statString.insert(i, ",");
+    }
+    return statString;
+}
+
+/**
  * Standardize the description.
  *
  * @param description   the description to standardize

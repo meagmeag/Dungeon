@@ -11,6 +11,9 @@ class Player : public Creature {
 public:
    Player();
    Player(string name);
+   friend ostream& operator<<(ostream& out, const Player& player);
+
+   void LevelUp(int level);
 };
 
 

@@ -21,11 +21,12 @@ Creature::Creature() {
 
 
 /**
- * Constructor for a default creature with a custom name.
+ * Constructor for a default Level 1 creature with a custom name.
  *
  * @param name   the creature's name
  **/
 Creature::Creature(std::string name) {
+    // Resources = 15 x Level 1 = 15
     this->name = name;
     StandardizeName(this->name);
     level = 1;
@@ -39,38 +40,61 @@ Creature::Creature(std::string name) {
 }
 
 /**
- * Constructor to make a custom creature.
+ * Constructor to make a custom creature Level 1.
  *
- * @param name     name of creature
- * @param maxHealth   maxHealth of creature
- * @param baseDmg  base attack damage of creature
+ * @param name            name of creature
+ * @param healthPercent   the percent of resources health should take
  * @post inventory slots set to 5
  **/
-Creature::Creature(string name, int maxHealth, int baseDmg) {
+Creature::Creature(string name, float healthPercent) {
     this->name = name;
     StandardizeName(this->name);
     level = 1;
-
-    this->maxHealth = maxHealth;
+    dmgBuff = 1;
+    SetHealthAndDamage(healthPercent);
     currHealth = maxHealth;
-
-    this->baseDmg = baseDmg;
-    dmgBuff = baseDmg;
 }
 
 /**
+ * Constructor to make a custom creature.
  *
+ * @param name            name of creature
+ * @param healthPercent   the percent of resources health should take
+ * @param level           the level of the creature
+ * @post inventory slots set to 5
  */
-Creature::Creature(string name, int health, int baseDmg, int level) {
+Creature::Creature(string name, float healthPercent, int level) {
     this->name = name;
     StandardizeName(this->name);
-    this->level = level;
-
-    this->maxHealth = maxHealth;
+    if (level < 1) {
+        this->level = 1;
+    }
+    else {
+        this->level = level;
+    }
+    dmgBuff = 1;
+    SetHealthAndDamage(healthPercent);
     currHealth = maxHealth;
+}
 
-    this->baseDmg = baseDmg;
-    dmgBuff = baseDmg;
+/**
+ * Set health and damage of creature based on level.
+ *
+ * @param healthPercent   the percent of resources health should take
+ * @pre health is already to set to initial desired value
+ *      (may or may not follow rules)
+ **/
+void Creature::SetHealthAndDamage(float healthPercent) {
+    int resources = 15 * level * pow(1.1, level);
+    if (healthPercent < .75) {
+        healthPercent = .75;
+    }
+    else if (healthPercent > .9) {
+        healthPercent = .9;
+    }
+    maxHealth = resources * healthPercent;
+    baseDmg = resources - maxHealth; // remaining resources
+    UpdateTotalDamage();
 }
 
 /**
@@ -236,9 +260,8 @@ void Creature::TakeDamage(int damage) {
 ostream& operator<<(ostream &out, const Creature& creature) {
     out << setw(100) << setfill('-') << left << creature.name + " - " + creature.PrintLevel() + " " << endl
         << creature.PrintHealth() << endl
-        << creature.PrintBaseDamage() << endl
-        << creature.PrintTotalDamage() << endl << endl
-        << creature.inventory
+        << creature.PrintTotalDamage() << endl
+        << creature.PrintXPWorth() << endl
         << setw(100) << setfill('_') << "" << endl << endl;
 
     return out;
@@ -253,18 +276,21 @@ ostream& operator<<(ostream &out, const Creature& creature) {
     return "Level " + to_string(level);
  }
 string Creature::PrintHealth() const {
-    return "Health: " + to_string(currHealth) + "/" + to_string(maxHealth) + " HP";
+    return "Health: " + StandardizeStat(currHealth) + "/" + StandardizeStat(maxHealth) + " HP";
 }
 string Creature::PrintBaseDamage() const {
-    return "Base Damage: " + to_string(baseDmg);
+    return "Base Damage: " + StandardizeStat(baseDmg);
 }
 string Creature::PrintTotalDamage() const {
-    return "Total Damage: " + to_string(totalDmg);
+    return "Total Damage: " + StandardizeStat(totalDmg);
 }
 string Creature::PrintInventory() const {
      stringstream ss;
      ss << inventory;
      string inventoryPrint = ss.str();
      inventoryPrint.pop_back(); // remove last endline
-    return inventoryPrint;
+     return inventoryPrint;
+ }
+ string Creature::PrintXPWorth() const {
+     return "Worth " +  StandardizeStat(GetXPWorth()) + " XP when defeated";
  }
