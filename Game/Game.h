@@ -16,15 +16,19 @@ public:
     void Run();
 
 private:
+    //printing
+    void PrintBreak() const;
+    void PrintPlayer();
+    void PrintPlayerHealth();
+    void PrintPlayerInventory();
+
     void GetCorrectInput(string correctInput, string errorMessage);
-    void NextDialogue(string action);
+    void NextDialogue(const string& action = "to continue");
     void GetPlayerName();
     void Intro();
-    void Combat(Creature monster);
+    void SimpleCombat(Creature monster);
 
     Creature player;
-    Creature goblin; // temporary
-
     string input;
 };
 

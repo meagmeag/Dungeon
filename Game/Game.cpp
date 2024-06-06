@@ -7,13 +7,44 @@
 /**
  * Constructor
  **/
-Game::Game(): player("unknown"), goblin("goblin") {}
+Game::Game(): player("unknown") {}
 
 /**
  * Run the game.
  **/
 void Game::Run() {
     Intro();
+}
+
+/**
+ * Print a dashed line.
+ * Use between dialogue and actions.
+ **/
+void Game::PrintBreak() const {
+    cout << setfill('-') << setw(10) << "" << endl;
+}
+
+void Game::PrintPlayer() {
+    cout << player;
+    NextDialogue();
+}
+
+/**
+ * Print the player's health and wait for enter to be pressed.
+ **/
+void Game::PrintPlayerHealth() {
+    PrintBreak();
+    cout << "Your " << player.PrintHealth() << endl << endl;
+    NextDialogue();
+}
+
+/**
+ * Print the player's inventory and wait for enter to be pressed.
+ **/
+void Game::PrintPlayerInventory() {
+    PrintBreak();
+    cout << player.PrintInventory() << endl << endl;
+    NextDialogue();
 }
 
 /**
@@ -38,11 +69,10 @@ void Game::GetCorrectInput(string correctInput, string errorMessage) {
 /**
  * Transition to next dialogue (prompt to press enter).
  **/
-void Game::NextDialogue(string action = "continue") {
+void Game::NextDialogue(const string& action) {
     cout << endl << "(press enter to " + action + ")" << endl;
     getline(cin, input);
-    cout << setfill('-') << setw(10) << "" << endl;
-
+    PrintBreak();
 }
 
 /**
@@ -75,13 +105,11 @@ void Game::Intro() {
     GetPlayerName();
     cout << "This is you... (press enter to see stats)" << endl;
     getline(cin, input);
-    cout << player;
-    NextDialogue();
-    cout << "You can see your stats at any time by typing \"show me\" and pressing enter." << endl
+    PrintPlayer();
+    cout << "You can see all of your stats at any time by typing \"show me\" and pressing enter." << endl
         << "Try it now." << endl;
     GetCorrectInput("show me", "That's not right. Try again. Type \"show me\" and press enter.");
-    cout << player;
-    NextDialogue();
+    PrintPlayer();
     cout << "Nice! Moving on..." << endl << endl;
     cout << Quote(player.PrintHealth()) << endl
         << "This line shows your health. Don't let it reach zero, or you'll DIE!" << endl << endl
@@ -117,8 +145,7 @@ void Game::Intro() {
     player.AddItem(Weapon("knife", "small and not very sharp", 3, 1.7));
     cout << "Let's see what that did to your inventory. Type \"show me\" again." << endl;
     GetCorrectInput("show me", "That's not right. Type \"show me\".");
-    cout << player;
-    NextDialogue();
+    PrintPlayer();
     cout << "Look! It's now in your inventory, taking up one slot." << endl
         << "But it's not doing you much good in your inventory. Equip it!" << endl << endl
         << "Type \"equip ___\" to equip an item. Try it on the knife." << endl;
@@ -126,8 +153,7 @@ void Game::Intro() {
     player.EquipItem("knife");
     cout << "Good, now show your stats again to see what that did." << endl;
     GetCorrectInput("show me", "That's not right. Type \"show me\".");
-    cout << player;
-    NextDialogue();
+    PrintPlayer();
     cout << "Your damage is now 5 x 1.7 (the knife's attack damage buff)." << endl
         << "Notice, your total damage is not a decimal - it's a whole number. Damage can only ever be a whole number." << endl;
     NextDialogue();
@@ -138,45 +164,62 @@ void Game::Intro() {
         << "You can probably take it..." << endl
         << "Type \"attack ___\" to attack an enemy" << endl;
     GetCorrectInput("attack imp", "That's not right. Type \"attack imp\"");
-    Combat(Creature ("imp"));
+    SimpleCombat(Creature ("imp"));
     cout << "Nice job! But, that imp still did some serious damage to you. Let's check your health." << endl << endl
-        << "Type \"show my health\" to see your health." << endl;
-    GetCorrectInput("show my health", "That's not right. Type \"show my health\".");
-    cout << "Your " << player.PrintHealth() << endl << endl;
+        << "Type \"show health\" to see just your health stats." << endl;
+    GetCorrectInput("show health", "That's not right. Type \"show health\".");
+    PrintPlayerHealth();
     cout << "Ouch! ...Wait! Here comes the barkeep! Maybe he can help you..." << endl;
     NextDialogue("talk to the barkeep");
-    cout << "His relieved expression turns to disgust when he realizes you are a simple peasant, not a knight." << endl
-        << "\"Here,\" he groans as he slams a potion down into your hand then grumpily walks away. Not even a thank you?!" << endl << endl
-        << "The bar chatter continues. Some patrons are eyeing your potion... You better put it in your inventory." << endl;
-    GetCorrectInput("take potion", "That's not right. type \"take potion\"");
+    cout << "The barkeep approaches you, looking happily relieved." << endl
+        << "However, his relieved expression turns to disgust when he realizes you are a simple peasant, not a knight." << endl
+        << "\"Here,\" he groans as he slams a WEAK HEALTH POTION down into your hand then grumpily walks away. Not even a thank you?!" << endl << endl
+        << "The bar chatter continues. Some patrons are eyeing your WEAK HEALTH POTION... You better put it in your inventory." << endl
+        << "Remember, thats the \"take ___\" command" << endl;
+    GetCorrectInput("take WEAK HEALTH POTION", "That's not right. type \"take weak health potion\"");
     player.AddItem(Consumable("weak health potion", "a shimmery red liquid in a vial", 5, "You drink it. It tastes bitter, but you feel stronger instantly.", 5));
     cout << "Good. Now type \"show inventory\" to show just your inventory." << endl;
     GetCorrectInput("show inventory", "that's not right. type \"show inventory\"");
-    cout << player.PrintInventory() << endl << endl
-        << "Alright, you clearly need the potion. Type \"use ___\" to use a consumable." << endl;
+    PrintPlayerInventory();
+    cout << "Alright, you clearly need the potion. Type \"use ___\" to use a consumable." << endl;
     GetCorrectInput("use weak health potion", "that's not right. type \"use weak health potion\"");
     player.UseConsumable("weak health potion");
-    cout << "Now, look at your health." << endl;
-    GetCorrectInput("show my health", "That's not right. Type \"show my health\".");
-    cout << "Your " << player.PrintHealth() << endl << endl
-        << "See! All better." << endl;
+    cout << "Now, look at your just your health stats again." << endl
+        << "Remember, that's \"show health\"" << endl;
+    GetCorrectInput("show health", "That's not right. Type \"show health\".");
+    PrintPlayerHealth();
+    cout << "See! All better." << endl << endl
+        << "You should know that was an easy fight. In the future, it won't be so easy." << endl
+        << "You will have more attack abilities and have to put more thought into your actions." << endl
+        << "You may find yourself overwhelmed, and you may have to flee!" << endl
+        << "In the future, combat will have that option, and it will be explained further." << endl;
+    NextDialogue();
 }
 
-void Game::Combat(Creature monster) {
+/**
+ * Combat between player and one monster without the option to flee.
+ * Use for tutorials.
+ *
+ * @param monster    The monster for the player to fight.
+ **/
+void Game::SimpleCombat(Creature monster) {
+    PrintBreak();
     while (true) {
         cout << "You do " << player.GetTotalDamage() << " damage to the " << monster.GetName() << endl;
         monster.TakeDamage(player.GetTotalDamage());
         cout << monster.GetName() << "'s " << monster.PrintHealth() << endl << endl;
         if (monster.GetCurrentHealth() <= 0) {
-            cout << "You slayed the " << monster.GetName() << "!" << endl;
+            cout << "You slayed the " << monster.GetName() << "!" << endl << endl;
             break;
         }
         cout << "It does " << monster.GetTotalDamage() << " damage to you " << endl;
         player.TakeDamage(monster.GetTotalDamage());
         cout << "Your " << player.PrintHealth() << endl << endl;
         if (player.GetCurrentHealth() <= 0) {
-            cout << "YOU DIED!" << endl;
+            cout << "YOU DIED!" << endl << endl;
             break;
         }
+        NextDialogue("continue fighting the " + monster.GetName());
     }
+    NextDialogue();
 }
