@@ -13,7 +13,14 @@ public:
    Player(string name);
    friend ostream& operator<<(ostream& out, const Player& player);
 
-   void LevelUp(int level);
+   int LevelUp();
+   int GainXP(int XP);
+   string PrintXP() const;
+   int neededXP; // make private!!!
+
+private:
+    int currXP;
+    const float PLAYER_HEALTH_PERCENT = .9;
 };
 
 

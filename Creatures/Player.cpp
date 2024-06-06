@@ -9,6 +9,8 @@
  **/
 Player::Player() {
     name = "UNNAMED PLAYER";
+    currXP = 0;
+    neededXP = 10;
     // other member variables follow default player constructor
 }
 
@@ -19,6 +21,8 @@ Player::Player() {
 Player::Player(std::string name) {
     this->name = name;
     StandardizeName(this->name);
+    currXP = 0;
+    neededXP = 10;
 }
 
 /**
@@ -30,6 +34,7 @@ Player::Player(std::string name) {
  */
 ostream& operator<<(ostream& out, const Player& player) {
     out << setw(100) << setfill('-') << left << player.name + " - " + player.PrintLevel() + " " << endl
+        << player.PrintXP() << endl
         << player.PrintHealth() << endl
         << player.PrintBaseDamage() << endl
         << player.PrintTotalDamage() << endl << endl
@@ -39,8 +44,32 @@ ostream& operator<<(ostream& out, const Player& player) {
     return out;
 }
 
-void Player::LevelUp(int level) {
-    this->level = level;
-    SetHealthAndDamage(1);
-    currHealth = maxHealth;
+/**
+ * Get printable version of XP stats.
+ *
+ * @return the current and needed XP as a string
+ **/
+string Player::PrintXP() const {
+    return StandardizeStat(currXP) + "/" + StandardizeStat(neededXP) + " XP";
+}
+
+int Player::GainXP(int XP) {
+    currXP += XP;
+    if (currXP >= neededXP) {
+        return LevelUp();
+    }
+    return 0;
+}
+
+int Player::LevelUp() {
+    int numLevels = 0;
+    while (currXP >= neededXP) {
+        level++;
+        numLevels++;
+        SetHealthAndDamage(PLAYER_HEALTH_PERCENT);
+        currHealth = maxHealth;
+        currXP -= neededXP;
+        neededXP = pow(level, 2) * 20;
+    }
+    return numLevels;
 }

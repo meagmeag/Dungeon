@@ -28,7 +28,7 @@ private:
     void Intro();
     void SimpleCombat(Creature monster);
 
-    Creature player;
+    Player player;
     string input;
 };
 

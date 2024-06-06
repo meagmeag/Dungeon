@@ -5,11 +5,8 @@
 #include "Game.h"
 
 int main() {
-    //Game game;
-    //game.Run();
-    Creature goblin("goblin", 1, 65);
-    goblin.AddItem(Weapon("sword", "long", 20, 50));
-    goblin.EquipItem("sword");
-    cout << goblin;
+    Player player;
+    player.GainXP(player.neededXP + 90);
+    cout << player;
     return 0;
 }

@@ -261,14 +261,14 @@ ostream& operator<<(ostream &out, const Creature& creature) {
     out << setw(100) << setfill('-') << left << creature.name + " - " + creature.PrintLevel() + " " << endl
         << creature.PrintHealth() << endl
         << creature.PrintTotalDamage() << endl
-        << creature.PrintXPWorth() << endl
+        << creature.PrintXP() << endl
         << setw(100) << setfill('_') << "" << endl << endl;
 
     return out;
 }
 
 /**
- * Functions to print various stats.
+ * Functions used to get printable version of stats.
  *
  * @return a line of this format: "STAT_NAME: stat_info"
  **/
@@ -291,6 +291,6 @@ string Creature::PrintInventory() const {
      inventoryPrint.pop_back(); // remove last endline
      return inventoryPrint;
  }
- string Creature::PrintXPWorth() const {
+ string Creature::PrintXP() const {
      return "Worth " +  StandardizeStat(GetXPWorth()) + " XP when defeated";
  }

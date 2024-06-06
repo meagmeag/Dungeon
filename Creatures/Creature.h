@@ -31,7 +31,7 @@ public:
     string PrintBaseDamage() const;
     string PrintTotalDamage() const;
     string PrintInventory() const;
-    string PrintXPWorth() const;
+    string PrintXP() const;
 
     // get info
     string GetName() const { return name; }
