@@ -5,10 +5,10 @@
 #ifndef DUNGEON_CRAWLER_ITEM_H
 #define DUNGEON_CRAWLER_ITEM_H
 
-#include "BasicFunctions.h"
+#include "GameObject.h"
 using namespace std;
 
-class Item : protected BasicFunctions {
+class Item : protected GameObject {
 public:
     Item();
     Item(string name);

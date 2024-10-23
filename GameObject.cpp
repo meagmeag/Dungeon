@@ -2,7 +2,7 @@
 // Created by meagh on 5/10/2024.
 //
 
-#include "BasicFunctions.h"
+#include "GameObject.h"
 using namespace std;
 
 /**
@@ -10,7 +10,7 @@ using namespace std;
 
  * @post name is in all caps
  **/
-void BasicFunctions::StandardizeName(string& name) {
+void GameObject::StandardizeName(string& name) {
     for (int i = 0; i < name.length(); i++) {
         name.at(i) = toupper(name.at(i));
     }
@@ -22,7 +22,7 @@ void BasicFunctions::StandardizeName(string& name) {
  * @param stat   the stat to standardize
  * @return the stat as a string with commas
  **/
-string BasicFunctions::StandardizeStat(int stat) const {
+string GameObject::ConvertNumberStatToString(int stat) const {
     string statString = to_string(stat);
     for (int i = statString.length() - 3; i > 0; i -= 3) {
         statString.insert(i, ",");
@@ -36,7 +36,7 @@ string BasicFunctions::StandardizeStat(int stat) const {
  * @param description   the description to standardize
  * @post sentences in description start with a capital ends with a period.
  **/
-void BasicFunctions::StandardizeDescription(string& description) {
+void GameObject::StandardizeDescription(string& description) {
     istringstream ss(description);
     description = "";
     string curWord;
@@ -70,7 +70,7 @@ void BasicFunctions::StandardizeDescription(string& description) {
  * @param word   the word to check
  * @return a bool indicating if above is true
  */
-bool BasicFunctions::EndOfSentence(string word) {
+bool GameObject::EndOfSentence(string word) {
         char lastChar = word.at(word.length() - 1);
 
         if (lastChar == '.' || lastChar == '?' || lastChar == '!') {
@@ -85,7 +85,7 @@ bool BasicFunctions::EndOfSentence(string word) {
  *
  * @post goldWorth is not < 0
  **/
-void BasicFunctions::StandardizeGold(int& gold) {
+void GameObject::StandardizeGold(int& gold) {
     if (gold < 0) {
         gold = 0;
     }
@@ -96,6 +96,6 @@ void BasicFunctions::StandardizeGold(int& gold) {
  *
  * @param words  the string to quote
  */
-string BasicFunctions::Quote(std::string words) {
+string GameObject::Quote(std::string words) {
     return "\"" + words + "\"";
 }

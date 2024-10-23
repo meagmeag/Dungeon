@@ -5,7 +5,7 @@
 #ifndef DUNGEON_CRAWLER_CREATURE_H
 #define DUNGEON_CRAWLER_CREATURE_H
 
-#include "BasicFunctions.h"
+#include "GameObject.h"
 #include "Inventory.h"
 using namespace std;
 
@@ -17,7 +17,7 @@ using namespace std;
  * Health + Base Damage must equal resources
  **/
 
-class Creature : protected BasicFunctions {
+class Creature : protected GameObject {
 public:
     Creature();
     Creature(string name);

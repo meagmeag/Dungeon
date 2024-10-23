@@ -13,14 +13,16 @@
 
 using namespace std;
 
-class BasicFunctions {
+class GameObject {
 public:
-    string StandardizeStat(int stat) const;
+    string ConvertNumberStatToString(int stat) const;
     void StandardizeName(string& name);
     void StandardizeDescription(string& description);
-    bool EndOfSentence(string word);
     void StandardizeGold(int& gold);
     string Quote(string words);
+
+private:
+    bool EndOfSentence(string word);
 };
 
 

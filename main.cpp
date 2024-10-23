@@ -5,8 +5,8 @@
 #include "Game.h"
 
 int main() {
-    Game tutorial;
-    tutorial.Run();
+    Game g;
+    g.Run();
     return 0;
 }
 

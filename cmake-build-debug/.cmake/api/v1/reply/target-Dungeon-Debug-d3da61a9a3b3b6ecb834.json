@@ -287,12 +287,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "BasicFunctions.cpp",
+			"path" : "GameObject.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "BasicFunctions.h",
+			"path" : "GameObject.h",
 			"sourceGroupIndex" : 1
 		},
 		{

@@ -5,7 +5,7 @@
 #ifndef DUNGEON_CRAWLER_INVENTORY_H
 #define DUNGEON_CRAWLER_INVENTORY_H
 
-#include "BasicFunctions.h"
+#include "GameObject.h"
 #include "Backpack.h"
 #include "Weapon.h"
 #include "Consumable.h"
@@ -23,7 +23,7 @@ struct InventorySlot {
     Consumable* thisConsumable = nullptr;
 };
 
-class Inventory : protected  BasicFunctions {
+class Inventory : protected  GameObject {
 public:
     Inventory();
     ~Inventory();

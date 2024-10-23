@@ -28,6 +28,6 @@ add_executable(Dungeon
         Items/Item.h
         Items/Weapon.cpp
         Items/Weapon.h
-        BasicFunctions.cpp
-        BasicFunctions.h
+        GameObject.cpp
+        GameObject.h
         main.cpp)

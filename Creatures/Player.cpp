@@ -50,7 +50,7 @@ ostream& operator<<(ostream& out, const Player& player) {
  * @return the current and needed XP as a string
  **/
 string Player::PrintXP() const {
-    return StandardizeStat(currXP) + "/" + StandardizeStat(neededXP) + " XP";
+    return ConvertNumberStatToString(currXP) + "/" + ConvertNumberStatToString(neededXP) + " XP";
 }
 
 int Player::GainXP(int XP) {

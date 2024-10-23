@@ -276,13 +276,13 @@ ostream& operator<<(ostream &out, const Creature& creature) {
     return "Level " + to_string(level);
  }
 string Creature::PrintHealth() const {
-    return "Health: " + StandardizeStat(currHealth) + "/" + StandardizeStat(maxHealth) + " HP";
+    return "Health: " + ConvertNumberStatToString(currHealth) + "/" + ConvertNumberStatToString(maxHealth) + " HP";
 }
 string Creature::PrintBaseDamage() const {
-    return "Base Damage: " + StandardizeStat(baseDmg);
+    return "Base Damage: " + ConvertNumberStatToString(baseDmg);
 }
 string Creature::PrintTotalDamage() const {
-    return "Total Damage: " + StandardizeStat(totalDmg);
+    return "Total Damage: " + ConvertNumberStatToString(totalDmg);
 }
 string Creature::PrintInventory() const {
      stringstream ss;
@@ -292,5 +292,5 @@ string Creature::PrintInventory() const {
      return inventoryPrint;
  }
  string Creature::PrintXP() const {
-     return "Worth " +  StandardizeStat(GetXPWorth()) + " XP when defeated";
+     return "Worth " +  ConvertNumberStatToString(GetXPWorth()) + " XP when defeated";
  }

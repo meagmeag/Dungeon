@@ -112,8 +112,8 @@ build CMakeFiles/Dungeon.dir/Items/Weapon.cpp.obj: CXX_COMPILER__Dungeon_unscann
   OBJECT_DIR = CMakeFiles\Dungeon.dir
   OBJECT_FILE_DIR = CMakeFiles\Dungeon.dir\Items
 
-build CMakeFiles/Dungeon.dir/BasicFunctions.cpp.obj: CXX_COMPILER__Dungeon_unscanned_Debug C$:/Users/meagh/OneDrive/Desktop/Dungeon/BasicFunctions.cpp || cmake_object_order_depends_target_Dungeon
-  DEP_FILE = CMakeFiles\Dungeon.dir\BasicFunctions.cpp.obj.d
+build CMakeFiles/Dungeon.dir/GameObject.cpp.obj: CXX_COMPILER__Dungeon_unscanned_Debug C$:/Users/meagh/OneDrive/Desktop/Dungeon/GameObject.cpp || cmake_object_order_depends_target_Dungeon
+  DEP_FILE = CMakeFiles\Dungeon.dir\GameObject.cpp.obj.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   INCLUDES = -IC:/Users/meagh/OneDrive/Desktop/Dungeon/. -IC:/Users/meagh/OneDrive/Desktop/Dungeon/Creatures -IC:/Users/meagh/OneDrive/Desktop/Dungeon/Game -IC:/Users/meagh/OneDrive/Desktop/Dungeon/Inventory -IC:/Users/meagh/OneDrive/Desktop/Dungeon/Items
   OBJECT_DIR = CMakeFiles\Dungeon.dir
@@ -134,7 +134,7 @@ build CMakeFiles/Dungeon.dir/main.cpp.obj: CXX_COMPILER__Dungeon_unscanned_Debug
 #############################################
 # Link the executable Dungeon.exe
 
-build Dungeon.exe: CXX_EXECUTABLE_LINKER__Dungeon_Debug CMakeFiles/Dungeon.dir/Creatures/Creature.cpp.obj CMakeFiles/Dungeon.dir/Creatures/Player.cpp.obj CMakeFiles/Dungeon.dir/Game/Game.cpp.obj CMakeFiles/Dungeon.dir/Game/Room.cpp.obj CMakeFiles/Dungeon.dir/Inventory/Inventory.cpp.obj CMakeFiles/Dungeon.dir/Items/Backpack.cpp.obj CMakeFiles/Dungeon.dir/Items/Consumable.cpp.obj CMakeFiles/Dungeon.dir/Items/Item.cpp.obj CMakeFiles/Dungeon.dir/Items/Weapon.cpp.obj CMakeFiles/Dungeon.dir/BasicFunctions.cpp.obj CMakeFiles/Dungeon.dir/main.cpp.obj
+build Dungeon.exe: CXX_EXECUTABLE_LINKER__Dungeon_Debug CMakeFiles/Dungeon.dir/Creatures/Creature.cpp.obj CMakeFiles/Dungeon.dir/Creatures/Player.cpp.obj CMakeFiles/Dungeon.dir/Game/Game.cpp.obj CMakeFiles/Dungeon.dir/Game/Room.cpp.obj CMakeFiles/Dungeon.dir/Inventory/Inventory.cpp.obj CMakeFiles/Dungeon.dir/Items/Backpack.cpp.obj CMakeFiles/Dungeon.dir/Items/Consumable.cpp.obj CMakeFiles/Dungeon.dir/Items/Item.cpp.obj CMakeFiles/Dungeon.dir/Items/Weapon.cpp.obj CMakeFiles/Dungeon.dir/GameObject.cpp.obj CMakeFiles/Dungeon.dir/main.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Dungeon.dir

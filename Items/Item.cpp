@@ -91,7 +91,7 @@ void Item::SetDescription(string description)
 ostream& operator<<(ostream& out, const Item& item) {
     out << item.name << endl
         << "    " << item.description << endl
-        << "    Worth " << item.StandardizeStat(item.goldWorth) << " gold." << endl;
+        << "    Worth " << item.ConvertNumberStatToString(item.goldWorth) << " gold." << endl;
 
     return out;
 }

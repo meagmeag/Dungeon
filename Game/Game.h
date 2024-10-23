@@ -5,12 +5,12 @@
 #ifndef DUNGEON_GAME_H
 #define DUNGEON_GAME_H
 
-#include "BasicFunctions.h"
+#include "GameObject.h"
 #include "Player.h"
 using namespace std;
 
 
-class Game : protected BasicFunctions {
+class Game : protected GameObject {
 public:
     Game();
     void Run();
