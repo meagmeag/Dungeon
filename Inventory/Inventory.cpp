@@ -387,9 +387,15 @@ void Inventory::ClearInventory() {
         numItems--;
         walk = nextWalk;
     }
-
     firstSlot = nullptr;
     lastSlot = nullptr;
+
+    delete backpackSlot;
+    backpackSlot = nullptr;
+    delete rightHandSlot;
+    rightHandSlot = nullptr;
+    delete leftHandSlot;
+    leftHandSlot = nullptr;
 }
 
 /**
