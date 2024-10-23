@@ -5,8 +5,8 @@
 #include "Game.h"
 
 int main() {
-    Player player;
-    player.GainXP(player.neededXP + 90);
-    cout << player;
+    Game tutorial;
+    tutorial.Run();
     return 0;
 }
+

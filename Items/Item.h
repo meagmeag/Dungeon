@@ -32,4 +32,5 @@ protected:
     int goldWorth;
 };
 
+
 #endif //DUNGEON_CRAWLER_ITEM_H
